@@ -4,7 +4,9 @@ A static demo website that mimics the Juno desktop app's tax preparation export 
 
 ## Stack
 
-Plain HTML + CSS + vanilla JavaScript. No build step, no framework. Serve as static files or open `index.html` directly in a browser.
+Plain HTML + vanilla JavaScript. No build step, no framework. **Each HTML file is fully self-contained** — all CSS lives in a `<style>` block in the `<head>` and all JavaScript lives in a `<script>` block before `</body>`. The only external resource is Google Fonts (Inter) via CDN.
+
+This matters because iframe-sandboxed preview panels and some hosted environments don't reliably load sibling files like `styles.css` or `app.js`. Inlining everything means "drop a single HTML file anywhere and it just works."
 
 ## Pages
 
@@ -60,7 +62,7 @@ Replicates the per-client document detail view.
   - **Exported By**: dash
   - **Preview**: eye icon + "View" link → shows a toast on click
   - **Map To**: dropdown — options depend on form type (see below)
-  - **Action**: dropdown — Map / Add new form / Skip / Mark reviewed
+  - **Action**: dropdown — Add / Skip
   - **Status**: small green dot at the end of each row
 - **Export section** at bottom (light gray rounded background):
   - Left: "12 documents ready to export" with pulsing green dot
@@ -83,7 +85,7 @@ Replicates the per-client document detail view.
 | D01-20241099-DIV_ScroogeInvest.pdf | 1099-DIV | Scrooge McDuck Investments | — |
 | B01-20241099-B_CharlesSchwab.pdf | 1099-B | Charles Schwab & Co. | — |
 | M01-2024-1098_WellsFargoMortgage.pdf | 1098 | Wells Fargo Home Mortgage | — |
-| SSA01-2024-1099-SSA_DaisyDuck.pdf | SSA 1099 | N/A | Action = "Add new form" |
+| SSA01-2024-1099-SSA_DaisyDuck.pdf | SSA 1099 | N/A | Action = "Add" |
 | K01-2024K-1_DuckFamilyHoldings.pdf | K-1 1120S | Duck Family Holdings LLC | — |
 
 ---
@@ -104,10 +106,8 @@ Each option shows a label and a sub-description that references the actual tax r
 
 ## Action dropdown options (all forms)
 
-- Map to existing form *(Use selected mapping)*
-- Add new form *(Create a new entry on the return)*
-- Skip document *(Exclude from this export)*
-- Mark as reviewed *(No mapping needed)*
+- Add *(Add as a new form on the return)*
+- Skip *(Exclude from this export)*
 
 ---
 
@@ -187,12 +187,12 @@ Modal requirements:
 
 ```
 juno-export-demo/
-├── index.html          # Tax Preparations list (landing)
-├── preparation.html    # Document mapping + export buttons
-├── styles.css          # All styles for both pages
-├── app.js              # Renders prep-page table; dropdown + modal logic
+├── index.html          # Tax Preparations list (landing) — self-contained
+├── preparation.html    # Document mapping + export buttons — self-contained
 └── INSTRUCTIONS.md     # This file
 ```
+
+Both HTML files are independently deployable. Each contains its own inline CSS; `preparation.html` also contains the inline JavaScript for rendering the table, handling dropdowns, and opening the export-video modal. There are no shared external assets.
 
 ---
 
@@ -200,6 +200,24 @@ juno-export-demo/
 
 1. **Force light mode**. Add `<meta name="color-scheme" content="light only">` AND `html { color-scheme: only light; }` in CSS. Without it, browsers with "Auto Dark Mode for Web Contents" enabled invert the white background to black and the dark text becomes invisible. Belt-and-suspenders fix: also put `style="background-color: #ffffff; color: #1a1f1b;"` inline on the `<body>` tag.
 2. **Loom embed URL format**: use `/embed/{id}`, not `/share/{id}`. Query params `?hide_owner=true&hide_share=true` give a cleaner embed.
-3. **Iframe sandboxing**: when running inside a preview iframe, external stylesheets and fonts may be blocked or delayed. Inline the critical body-background/color CSS in a `<style>` block in the `<head>` as a fallback.
+3. **Inline all CSS and JS — do not link external files.** Iframe-sandboxed preview panels and some hosted environments silently fail to load sibling files like `styles.css` or `app.js`. The symptom is a fully unstyled page (default serif font, blue underlined links, no layout). Put all CSS in a `<style>` block in `<head>` and all scripts in an inline `<script>` block before `</body>`. Larger HTML files, but works anywhere.
 4. **Sample data is fictional** (Disney characters). Don't ship to production with these names — replace with anonymized realistic clients before any external demo.
-5. **Single-page nature**: all "View" links on the list page go to the same `preparation.html`. If you want per-client data, you'd need a routing layer or query-string handling in `app.js`.
+5. **Single-page nature**: all "View" links on the list page go to the same `preparation.html`. If you want per-client data, you'd need a routing layer or query-string handling inline in `preparation.html`.
+
+---
+
+## Deployment
+
+Two static HTML files — any static host works. Easiest paths:
+
+- **GitHub Pages** (CLI, free, public repo required):
+  ```bash
+  cd juno-export-demo
+  git init && git add . && git commit -m "Initial commit"
+  gh repo create juno-export-demo --public --source=. --remote=origin --push
+  gh api -X POST "repos/{owner}/juno-export-demo/pages" -f "source[branch]=main" -f "source[path]=/"
+  ```
+  URL pattern: `https://<github-username>.github.io/juno-export-demo/`
+- **Netlify Drop** (no signup, instant): drag the project folder onto https://app.netlify.com/drop.
+- **Vercel** (CLI): `npm i -g vercel && vercel` from the project directory.
+- **Local preview**: `python3 -m http.server 8000` and visit `http://localhost:8000`.

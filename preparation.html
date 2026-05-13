@@ -594,7 +594,7 @@
       { name: "D01-20241099-DIV_ScroogeInvest.pdf", form: "1099-DIV", issuer: "Scrooge McDuck Investments" },
       { name: "B01-20241099-B_CharlesSchwab.pdf", form: "1099-B", issuer: "Charles Schwab & Co." },
       { name: "M01-2024-1098_WellsFargoMortgage.pdf", form: "1098", issuer: "Wells Fargo Home Mortgage" },
-      { name: "SSA01-2024-1099-SSA_DaisyDuck.pdf", form: "SSA 1099", issuer: "N/A", defaultAction: "Add new form" },
+      { name: "SSA01-2024-1099-SSA_DaisyDuck.pdf", form: "SSA 1099", issuer: "N/A", defaultAction: "Add" },
       { name: "K01-2024K-1_DuckFamilyHoldings.pdf", form: "K-1 1120S", issuer: "Duck Family Holdings LLC" },
     ];
 
@@ -649,10 +649,8 @@
     };
 
     const actionOptions = [
-      { label: "Map to existing form", desc: "Use selected mapping" },
-      { label: "Add new form", desc: "Create a new entry on the return" },
-      { label: "Skip document", desc: "Exclude from this export" },
-      { label: "Mark as reviewed", desc: "No mapping needed" },
+      { label: "Add", desc: "Add as a new form on the return" },
+      { label: "Skip", desc: "Exclude from this export" },
     ];
 
     const videoSources = {
