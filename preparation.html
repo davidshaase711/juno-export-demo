@@ -329,9 +329,7 @@
       background: var(--bg-soft);
       border-radius: var(--radius);
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 16px;
     }
     .ready-badge {
@@ -349,29 +347,43 @@
       background: var(--green-dot);
       box-shadow: 0 0 0 4px rgba(43, 179, 92, 0.15);
     }
-    .export-buttons { display: flex; gap: 12px; }
+    .export-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
     .export-btn {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 13px 22px;
+      padding: 5px 18px 5px 5px;
       border-radius: 999px;
       font-weight: 600;
-      font-size: 14.5px;
-      transition: transform 0.08s, background 0.15s, box-shadow 0.15s;
+      font-size: 14px;
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--border);
+      transition: transform 0.08s, background 0.15s, border-color 0.15s, box-shadow 0.15s;
+    }
+    .export-btn:hover {
+      border-color: var(--juno-dark);
+      background: var(--juno-mint-2);
+      box-shadow: 0 4px 12px rgba(14, 61, 46, 0.08);
     }
     .export-btn:active { transform: translateY(1px); }
-    .export-btn.primary { background: var(--juno-dark); color: white; }
-    .export-btn.primary:hover {
-      background: var(--juno-dark-2);
-      box-shadow: 0 6px 16px rgba(14, 61, 46, 0.25);
+    .export-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+      letter-spacing: -0.5px;
     }
-    .export-btn.secondary {
-      background: white;
-      color: var(--juno-dark);
-      border: 1.5px solid var(--juno-dark);
-    }
-    .export-btn.secondary:hover { background: var(--juno-mint-2); }
 
     .modal {
       position: fixed;
@@ -461,9 +473,7 @@
       .table-row > * { width: 100%; }
       .row-status { position: absolute; top: 14px; right: 14px; }
       .page-header { flex-wrap: wrap; gap: 12px; }
-      .export-section { flex-direction: column; align-items: stretch; }
-      .export-buttons { width: 100%; }
-      .export-btn { flex: 1; justify-content: center; }
+      .export-buttons { justify-content: center; }
     }
   </style>
 </head>
@@ -544,21 +554,25 @@
         </span>
       </div>
       <div class="export-buttons">
-        <button class="export-btn secondary" data-target="proconnect" type="button">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          <span>Export to ProConnect</span>
+        <button class="export-btn" data-target="proconnect" type="button">
+          <span class="export-logo" style="background: #236CFF;">P</span>
+          <span>ProConnect</span>
         </button>
-        <button class="export-btn primary" data-target="cch" type="button">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          <span>Export to CCH Axcess</span>
+        <button class="export-btn" data-target="ultratax" type="button">
+          <span class="export-logo" style="background: #FF8200;">U</span>
+          <span>UltraTax</span>
+        </button>
+        <button class="export-btn" data-target="cch" type="button">
+          <span class="export-logo" style="background: #003D6E;">C</span>
+          <span>CCH Axcess</span>
+        </button>
+        <button class="export-btn" data-target="lacerte" type="button">
+          <span class="export-logo" style="background: #2CA01C;">L</span>
+          <span>Lacerte</span>
+        </button>
+        <button class="export-btn" data-target="drake" type="button">
+          <span class="export-logo" style="background: #C8102E;">D</span>
+          <span>Drake</span>
         </button>
       </div>
     </section>
@@ -640,11 +654,23 @@
     const videoSources = {
       proconnect: {
         title: "Export to ProConnect",
-        src: "https://www.loom.com/embed/e411e678032d4d3fa53f24e82e937a37?hide_owner=true&hide_share=true",
+        src: "https://www.loom.com/embed/a5588b76137849529c415573748d155d?hide_owner=true&hide_share=true",
+      },
+      ultratax: {
+        title: "Export to UltraTax",
+        src: "https://www.loom.com/embed/78f8925b85764896adbaf273c6e00b1c?hide_owner=true&hide_share=true",
       },
       cch: {
         title: "Export to CCH Axcess",
-        src: "https://www.loom.com/embed/20cd6712246d446eb8c6ca14943c05eb?hide_owner=true&hide_share=true",
+        src: "https://www.loom.com/embed/35dc120d07cf4f06b02582f7be7861f9?hide_owner=true&hide_share=true",
+      },
+      lacerte: {
+        title: "Export to Lacerte",
+        src: "https://www.loom.com/embed/13d959a8cd7c44e0bc5af8cd20024a94?hide_owner=true&hide_share=true",
+      },
+      drake: {
+        title: "Export to Drake",
+        src: "https://www.loom.com/embed/99e128017ccb41d68c5291529fd31d3b?hide_owner=true&hide_share=true",
       },
     };
 

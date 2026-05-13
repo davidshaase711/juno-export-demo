@@ -65,11 +65,15 @@ Replicates the per-client document detail view.
   - **Action**: dropdown — Add / Skip
   - **Status**: small green dot at the end of each row
 - **Export section** at bottom (light gray rounded background):
-  - Left: "12 documents ready to export" with pulsing green dot
-  - Right: two buttons:
-    - "Export to ProConnect" (white background, dark-green border)
-    - "Export to CCH Axcess" (solid dark-green background)
-  - Clicking either opens a modal with a Loom video embed
+  - Top: "12 documents ready to export" with pulsing green dot
+  - Below: five export buttons, each with a circular badge "logo" (first letter in white on a brand-colored circle) followed by the software name:
+    - **ProConnect** — `P` on Intuit blue (`#236CFF`)
+    - **UltraTax** — `U` on orange (`#FF8200`)
+    - **CCH Axcess** — `C` on navy (`#003D6E`)
+    - **Lacerte** — `L` on green (`#2CA01C`)
+    - **Drake** — `D` on red (`#C8102E`)
+  - All buttons are white with light border; same style. They wrap to a second row on narrower viewports.
+  - Clicking any button opens a modal with the corresponding Loom video embed
 
 **Sample documents** (all belong to Daisy Duck):
 
@@ -115,8 +119,13 @@ Single-word labels, no descriptions:
 
 ## Export modal videos (Loom embeds)
 
-- **ProConnect**: `https://www.loom.com/embed/e411e678032d4d3fa53f24e82e937a37`
-- **CCH Axcess**: `https://www.loom.com/embed/20cd6712246d446eb8c6ca14943c05eb`
+Five export targets, each with its own Loom walkthrough. Use `/embed/{id}`, not `/share/{id}`:
+
+- **ProConnect**: `https://www.loom.com/embed/a5588b76137849529c415573748d155d`
+- **UltraTax**: `https://www.loom.com/embed/78f8925b85764896adbaf273c6e00b1c`
+- **CCH Axcess**: `https://www.loom.com/embed/35dc120d07cf4f06b02582f7be7861f9`
+- **Lacerte**: `https://www.loom.com/embed/13d959a8cd7c44e0bc5af8cd20024a94`
+- **Drake**: `https://www.loom.com/embed/99e128017ccb41d68c5291529fd31d3b`
 
 Modal requirements:
 - Dark backdrop with light blur
