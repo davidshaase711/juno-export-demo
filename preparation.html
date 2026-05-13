@@ -588,8 +588,8 @@
       { name: "W02-2024-W2_PixarAnimation_DaisyDuck.pdf", form: "W-2", issuer: "Pixar Animation Studios" },
       { name: "C01-2024-ScheduleC_FloralBoutique_Daisy.pdf", form: "Schedule C Source", issuer: "Daisy's Floral Boutique LLC" },
       { name: "C02-2024-ScheduleC_QuackBakery_Daisy.pdf", form: "Schedule C Source", issuer: "Quack Quack Bakery" },
-      { name: "N01-20241099-NEC_MickeysMarketing.pdf", form: "1099-NEC", issuer: "Mickey's Marketing Agency - 4521", mappedTo: "Other Income" },
-      { name: "N02-20241099-NEC_DonaldsDesign.pdf", form: "1099-NEC", issuer: "Donald's Design Co. - 9087", mappedTo: "Other Income" },
+      { name: "N01-20241099-NEC_MickeysMarketing.pdf", form: "1099-NEC", issuer: "Mickey's Marketing Agency - 4521", mappedTo: "Mickey's Marketing Agency" },
+      { name: "N02-20241099-NEC_DonaldsDesign.pdf", form: "1099-NEC", issuer: "Donald's Design Co. - 9087", mappedTo: "Donald's Design Co." },
       { name: "I01-20241099-INT_DuckburgFCU.pdf", form: "1099-INT", issuer: "Duckburg Federal Credit Union" },
       { name: "D01-20241099-DIV_ScroogeInvest.pdf", form: "1099-DIV", issuer: "Scrooge McDuck Investments" },
       { name: "B01-20241099-B_CharlesSchwab.pdf", form: "1099-B", issuer: "Charles Schwab & Co." },
@@ -600,57 +600,40 @@
 
     const mapOptionsByForm = {
       "W-2": [
-        { label: "Wages – Taxpayer", desc: "Form 1040, Line 1a" },
-        { label: "Wages – Spouse", desc: "Form 1040, Line 1a (joint)" },
-        { label: "Statutory Employee Wages", desc: "Schedule C, Line 1" },
+        { label: "Walt Disney Studios" },
+        { label: "Pixar Animation Studios" },
       ],
       "Schedule C Source": [
-        { label: "Schedule C – Business 1", desc: "Sole proprietorship #1" },
-        { label: "Schedule C – Business 2", desc: "Sole proprietorship #2" },
-        { label: "Schedule C – New Business", desc: "Create new Schedule C" },
+        { label: "Daisy's Floral Boutique" },
+        { label: "Quack Quack Bakery" },
       ],
       "1099-NEC": [
-        { label: "Other Income", desc: "Schedule 1, Line 8" },
-        { label: "Schedule C – Business 1", desc: "Self-employment income" },
-        { label: "Schedule C – Business 2", desc: "Self-employment income" },
-        { label: "Schedule C – New Business", desc: "Create new Schedule C" },
+        { label: "Mickey's Marketing Agency" },
+        { label: "Donald's Design Co." },
       ],
       "1099-INT": [
-        { label: "Interest Income", desc: "Schedule B, Part I" },
-        { label: "Tax-Exempt Interest", desc: "Form 1040, Line 2a" },
-        { label: "Seller-Financed Mortgage Interest", desc: "Schedule B, Line 1" },
+        { label: "Duckburg Federal Credit Union" },
       ],
       "1099-DIV": [
-        { label: "Ordinary Dividends", desc: "Schedule B, Part II" },
-        { label: "Qualified Dividends", desc: "Form 1040, Line 3a" },
-        { label: "Capital Gain Distributions", desc: "Schedule D, Line 13" },
+        { label: "Scrooge McDuck Investments" },
       ],
       "1099-B": [
-        { label: "Short-Term Capital Gains", desc: "Schedule D, Part I" },
-        { label: "Long-Term Capital Gains", desc: "Schedule D, Part II" },
-        { label: "Form 8949 – Box A", desc: "Reported basis to IRS" },
-        { label: "Form 8949 – Box D", desc: "Long-term, basis reported" },
+        { label: "Charles Schwab & Co." },
       ],
       "1098": [
-        { label: "Home Mortgage Interest", desc: "Schedule A, Line 8a" },
-        { label: "Investment Interest", desc: "Form 4952" },
-        { label: "Rental Mortgage Interest", desc: "Schedule E, Line 12" },
+        { label: "Wells Fargo Home Mortgage" },
       ],
       "SSA 1099": [
-        { label: "Social Security Benefits", desc: "Form 1040, Line 6a" },
-        { label: "SS Benefits – Taxpayer", desc: "Form 1040, Line 6a" },
-        { label: "SS Benefits – Spouse", desc: "Form 1040, Line 6a (joint)" },
+        { label: "Daisy Duck" },
       ],
       "K-1 1120S": [
-        { label: "S-Corp K-1 #1", desc: "Schedule E, Part II" },
-        { label: "S-Corp K-1 #2", desc: "Schedule E, Part II" },
-        { label: "New S-Corp K-1", desc: "Create new K-1 entry" },
+        { label: "Duck Family Holdings LLC" },
       ],
     };
 
     const actionOptions = [
-      { label: "Add", desc: "Add as a new form on the return" },
-      { label: "Skip", desc: "Exclude from this export" },
+      { label: "Add" },
+      { label: "Skip" },
     ];
 
     const videoSources = {

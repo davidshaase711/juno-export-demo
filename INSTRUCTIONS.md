@@ -79,8 +79,8 @@ Replicates the per-client document detail view.
 | W02-2024-W2_PixarAnimation_DaisyDuck.pdf | W-2 | Pixar Animation Studios | — |
 | C01-2024-ScheduleC_FloralBoutique_Daisy.pdf | Schedule C Source | Daisy's Floral Boutique LLC | — |
 | C02-2024-ScheduleC_QuackBakery_Daisy.pdf | Schedule C Source | Quack Quack Bakery | — |
-| N01-20241099-NEC_MickeysMarketing.pdf | 1099-NEC | Mickey's Marketing Agency - 4521 | Map To = "Other Income" |
-| N02-20241099-NEC_DonaldsDesign.pdf | 1099-NEC | Donald's Design Co. - 9087 | Map To = "Other Income" |
+| N01-20241099-NEC_MickeysMarketing.pdf | 1099-NEC | Mickey's Marketing Agency - 4521 | Map To = "Mickey's Marketing Agency" |
+| N02-20241099-NEC_DonaldsDesign.pdf | 1099-NEC | Donald's Design Co. - 9087 | Map To = "Donald's Design Co." |
 | I01-20241099-INT_DuckburgFCU.pdf | 1099-INT | Duckburg Federal Credit Union | — |
 | D01-20241099-DIV_ScroogeInvest.pdf | 1099-DIV | Scrooge McDuck Investments | — |
 | B01-20241099-B_CharlesSchwab.pdf | 1099-B | Charles Schwab & Co. | — |
@@ -92,22 +92,24 @@ Replicates the per-client document detail view.
 
 ## Map To dropdown options (by form type)
 
-Each option shows a label and a sub-description that references the actual tax return form/line.
+Each option is just the name of an existing entry on the tax return (employer, payer, business, etc.) — no tax-form line references, no descriptions. To create a new entry, use the Action column ("Add").
 
-- **W-2**: Wages – Taxpayer *(1040, Line 1a)*, Wages – Spouse *(1040, Line 1a joint)*, Statutory Employee Wages *(Schedule C, Line 1)*
-- **Schedule C Source**: Schedule C – Business 1, Schedule C – Business 2, Schedule C – New Business
-- **1099-NEC**: Other Income *(Schedule 1, Line 8)*, Schedule C – Business 1/2, Schedule C – New Business
-- **1099-INT**: Interest Income *(Schedule B, Part I)*, Tax-Exempt Interest *(1040, Line 2a)*, Seller-Financed Mortgage Interest *(Schedule B, Line 1)*
-- **1099-DIV**: Ordinary Dividends *(Schedule B, Part II)*, Qualified Dividends *(1040, Line 3a)*, Capital Gain Distributions *(Schedule D, Line 13)*
-- **1099-B**: Short-Term Capital Gains *(Schedule D, Part I)*, Long-Term Capital Gains *(Schedule D, Part II)*, Form 8949 – Box A, Form 8949 – Box D
-- **1098**: Home Mortgage Interest *(Schedule A, Line 8a)*, Investment Interest *(Form 4952)*, Rental Mortgage Interest *(Schedule E, Line 12)*
-- **SSA 1099**: Social Security Benefits, SS Benefits – Taxpayer, SS Benefits – Spouse
-- **K-1 1120S**: S-Corp K-1 #1, S-Corp K-1 #2, New S-Corp K-1
+- **W-2**: Walt Disney Studios, Pixar Animation Studios
+- **Schedule C Source**: Daisy's Floral Boutique, Quack Quack Bakery
+- **1099-NEC**: Mickey's Marketing Agency, Donald's Design Co.
+- **1099-INT**: Duckburg Federal Credit Union
+- **1099-DIV**: Scrooge McDuck Investments
+- **1099-B**: Charles Schwab & Co.
+- **1098**: Wells Fargo Home Mortgage
+- **SSA 1099**: Daisy Duck
+- **K-1 1120S**: Duck Family Holdings LLC
 
 ## Action dropdown options (all forms)
 
-- Add *(Add as a new form on the return)*
-- Skip *(Exclude from this export)*
+Single-word labels, no descriptions:
+
+- Add
+- Skip
 
 ---
 
