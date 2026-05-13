@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <title>Juno — Daisy Duck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --juno-dark: #0E3D2E;
+      --juno-dark-2: #0A3225;
+      --juno-mint: #D7F2DE;
+      --juno-mint-2: #E8F7EC;
+      --green-dot: #2BB35C;
+      --purple: #6B4FBB;
+      --bg: #FFFFFF;
+      --bg-soft: #F7F8F8;
+      --row-hover: #FAFBFA;
+      --text: #1A1F1B;
+      --text-muted: #6B7280;
+      --text-faint: #9CA3AF;
+      --border: #E5E7EB;
+      --border-soft: #EEF0F0;
+      --shadow-sm: 0 1px 2px rgba(15, 30, 22, 0.05);
+      --shadow-md: 0 8px 24px rgba(15, 30, 22, 0.08);
+      --shadow-lg: 0 24px 60px rgba(15, 30, 22, 0.25);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html { color-scheme: only light; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #FFFFFF;
+      color: #1A1F1B;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 48px;
+      border-bottom: 1px solid var(--border-soft);
+      background: #FFFFFF;
+    }
+    .logo-wrap {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 1px;
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      color: var(--juno-dark);
+    }
+    .logo-text { line-height: 1; }
+    .logo-o {
+      width: 22px;
+      height: 22px;
+      margin: 0 1px;
+      transform: translateY(2px);
+    }
+    .logo-dot {
+      color: var(--juno-dark);
+      font-weight: 700;
+      font-size: 26px;
+      margin-left: 1px;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--juno-mint);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .user-avatar:hover { background: #C8EAD3; }
+
+    .main {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 36px 48px 80px;
+      background: #FFFFFF;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--juno-dark);
+      font-weight: 700;
+      font-size: 22px;
+      padding: 4px 6px;
+      border-radius: 8px;
+      transition: background 0.15s;
+      text-decoration: none;
+    }
+    .back-btn:hover { background: var(--juno-mint-2); }
+
+    .help-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--juno-dark);
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .help-link:hover { text-decoration: underline; }
+
+    .client-card {
+      background: var(--bg-soft);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 26px;
+    }
+    .client-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .avatar-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--purple);
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .client-name {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text);
+    }
+    .client-email {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .checklist-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--juno-dark);
+      color: white;
+      border-radius: 999px;
+      padding: 11px 22px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background 0.15s;
+    }
+    .checklist-btn:hover { background: var(--juno-dark-2); }
+
+    .table-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: visible;
+      background: white;
+      box-shadow: var(--shadow-sm);
+    }
+    .table-header, .table-row {
+      display: grid;
+      grid-template-columns: minmax(220px, 1.5fr) 1fr 1.4fr 1fr 1fr 0.85fr 1.3fr 1.2fr 16px;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 22px;
+    }
+    .table-header {
+      background: var(--bg-soft);
+      border-bottom: 1px solid var(--border-soft);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-top-left-radius: var(--radius);
+      border-top-right-radius: var(--radius);
+    }
+    .table-row {
+      border-bottom: 1px solid var(--border-soft);
+      font-size: 14px;
+      color: var(--text);
+      transition: background 0.12s;
+    }
+    .table-row:last-child { border-bottom: none; }
+    .table-row:hover { background: var(--row-hover); }
+
+    .doc-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .doc-icon { flex-shrink: 0; color: var(--juno-dark); }
+    .doc-name-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 500;
+    }
+    .form-cell, .issuer-cell {
+      color: var(--text);
+      font-size: 14px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .dash { color: var(--text-faint); }
+
+    .preview-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--juno-dark);
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .preview-link:hover { text-decoration: underline; }
+
+    .row-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green-dot);
+      justify-self: end;
+    }
+
+    .dropdown { position: relative; width: 100%; }
+    .dropdown-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: white;
+      font-size: 13.5px;
+      color: var(--text);
+      font-weight: 500;
+      text-align: left;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .dropdown-toggle:hover { border-color: #C7CDD2; }
+    .dropdown.open .dropdown-toggle {
+      border-color: var(--juno-dark);
+      box-shadow: 0 0 0 3px rgba(14, 61, 46, 0.08);
+    }
+    .dropdown-toggle.placeholder { color: var(--text-faint); }
+    .dropdown-toggle .caret {
+      flex-shrink: 0;
+      color: var(--text-muted);
+      transition: transform 0.18s;
+    }
+    .dropdown.open .caret { transform: rotate(180deg); }
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: var(--shadow-md);
+      padding: 6px;
+      z-index: 50;
+      max-height: 260px;
+      overflow-y: auto;
+      display: none;
+    }
+    .dropdown.open .dropdown-menu { display: block; }
+    .dropdown-item {
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.12s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .dropdown-item:hover { background: var(--juno-mint-2); }
+    .dropdown-item.selected {
+      background: var(--juno-mint);
+      color: var(--juno-dark);
+      font-weight: 600;
+    }
+    .dropdown-item .check { color: var(--juno-dark); font-weight: 700; }
+    .dropdown-item .desc {
+      display: block;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+    .dropdown-item-wrap { flex: 1; min-width: 0; }
+
+    .export-section {
+      margin-top: 28px;
+      padding: 22px;
+      background: var(--bg-soft);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .ready-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .dot-green {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green-dot);
+      box-shadow: 0 0 0 4px rgba(43, 179, 92, 0.15);
+    }
+    .export-buttons { display: flex; gap: 12px; }
+    .export-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14.5px;
+      transition: transform 0.08s, background 0.15s, box-shadow 0.15s;
+    }
+    .export-btn:active { transform: translateY(1px); }
+    .export-btn.primary { background: var(--juno-dark); color: white; }
+    .export-btn.primary:hover {
+      background: var(--juno-dark-2);
+      box-shadow: 0 6px 16px rgba(14, 61, 46, 0.25);
+    }
+    .export-btn.secondary {
+      background: white;
+      color: var(--juno-dark);
+      border: 1.5px solid var(--juno-dark);
+    }
+    .export-btn.secondary:hover { background: var(--juno-mint-2); }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal.open { display: flex; }
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 25, 18, 0.6);
+      backdrop-filter: blur(2px);
+    }
+    .modal-panel {
+      position: relative;
+      background: white;
+      border-radius: 16px;
+      width: min(960px, 92vw);
+      max-height: 88vh;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalIn 0.18s ease-out;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(8px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .modal-header h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--juno-dark);
+    }
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: background 0.15s, color 0.15s;
+    }
+    .modal-close:hover { background: var(--bg-soft); color: var(--text); }
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: #000;
+    }
+    .video-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    @media (max-width: 1100px) {
+      .table-header, .table-row {
+        grid-template-columns: minmax(180px, 1.4fr) 0.9fr 1.2fr 0.9fr 0.9fr 0.8fr 1.2fr 1.1fr 16px;
+        padding: 14px 16px;
+      }
+    }
+    @media (max-width: 880px) {
+      .topbar { padding: 16px 22px; }
+      .main { padding: 24px 22px 60px; }
+      .table-header { display: none; }
+      .table-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 14px 16px;
+        position: relative;
+      }
+      .table-row > * { width: 100%; }
+      .row-status { position: absolute; top: 14px; right: 14px; }
+      .page-header { flex-wrap: wrap; gap: 12px; }
+      .export-section { flex-direction: column; align-items: stretch; }
+      .export-buttons { width: 100%; }
+      .export-btn { flex: 1; justify-content: center; }
+    }
+  </style>
+</head>
+<body style="background-color: #ffffff; color: #1a1f1b; margin: 0;">
+  <header class="topbar">
+    <div class="logo-wrap">
+      <span class="logo-text">JUN</span>
+      <svg class="logo-o" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="13" fill="none" stroke="#0E3D2E" stroke-width="5.5"/>
+      </svg>
+      <span class="logo-dot">.</span>
+    </div>
+    <button class="user-avatar" aria-label="User profile">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0E3D2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <div class="page-header">
+      <a href="index.html" class="back-btn">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>Back to Preparation List</span>
+      </a>
+      <a href="#" class="help-link">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <span>Need Help? View Export Tips</span>
+      </a>
+    </div>
+
+    <section class="client-card">
+      <div class="client-info">
+        <div class="avatar-circle">DD</div>
+        <div>
+          <div class="client-name">Daisy Duck</div>
+          <div class="client-email">daisy.duck@example.com</div>
+        </div>
+      </div>
+      <button class="checklist-btn" type="button">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="9" y1="13" x2="15" y2="13"></line>
+          <line x1="9" y1="17" x2="15" y2="17"></line>
+        </svg>
+        <span>Preparation Checklist</span>
+      </button>
+    </section>
+
+    <section class="table-card">
+      <div class="table-header">
+        <div>Document Name</div>
+        <div>Form</div>
+        <div>Issuer</div>
+        <div>Last Exported</div>
+        <div>Exported By</div>
+        <div>Preview</div>
+        <div>Map To</div>
+        <div>Action</div>
+      </div>
+      <div class="table-body" id="tableBody"></div>
+    </section>
+
+    <section class="export-section">
+      <div class="export-summary">
+        <span class="ready-badge">
+          <span class="dot-green"></span>
+          12 documents ready to export
+        </span>
+      </div>
+      <div class="export-buttons">
+        <button class="export-btn secondary" data-target="proconnect" type="button">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Export to ProConnect</span>
+        </button>
+        <button class="export-btn primary" data-target="cch" type="button">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Export to CCH Axcess</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="videoModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h2 id="modalTitle">Export Demo</h2>
+        <button class="modal-close" data-close aria-label="Close">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="video-wrap">
+        <iframe id="videoFrame" src="" frameborder="0" allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const documents = [
+      { name: "W01-2024-W2_WaltDisney_DaisyDuck.pdf", form: "W-2", issuer: "Walt Disney Studios Inc." },
+      { name: "W02-2024-W2_PixarAnimation_DaisyDuck.pdf", form: "W-2", issuer: "Pixar Animation Studios" },
+      { name: "C01-2024-ScheduleC_FloralBoutique_Daisy.pdf", form: "Schedule C Source", issuer: "Daisy's Floral Boutique LLC" },
+      { name: "C02-2024-ScheduleC_QuackBakery_Daisy.pdf", form: "Schedule C Source", issuer: "Quack Quack Bakery" },
+      { name: "N01-20241099-NEC_MickeysMarketing.pdf", form: "1099-NEC", issuer: "Mickey's Marketing Agency - 4521", mappedTo: "Other Income" },
+      { name: "N02-20241099-NEC_DonaldsDesign.pdf", form: "1099-NEC", issuer: "Donald's Design Co. - 9087", mappedTo: "Other Income" },
+      { name: "I01-20241099-INT_DuckburgFCU.pdf", form: "1099-INT", issuer: "Duckburg Federal Credit Union" },
+      { name: "D01-20241099-DIV_ScroogeInvest.pdf", form: "1099-DIV", issuer: "Scrooge McDuck Investments" },
+      { name: "B01-20241099-B_CharlesSchwab.pdf", form: "1099-B", issuer: "Charles Schwab & Co." },
+      { name: "M01-2024-1098_WellsFargoMortgage.pdf", form: "1098", issuer: "Wells Fargo Home Mortgage" },
+      { name: "SSA01-2024-1099-SSA_DaisyDuck.pdf", form: "SSA 1099", issuer: "N/A", defaultAction: "Add new form" },
+      { name: "K01-2024K-1_DuckFamilyHoldings.pdf", form: "K-1 1120S", issuer: "Duck Family Holdings LLC" },
+    ];
+
+    const mapOptionsByForm = {
+      "W-2": [
+        { label: "Wages – Taxpayer", desc: "Form 1040, Line 1a" },
+        { label: "Wages – Spouse", desc: "Form 1040, Line 1a (joint)" },
+        { label: "Statutory Employee Wages", desc: "Schedule C, Line 1" },
+      ],
+      "Schedule C Source": [
+        { label: "Schedule C – Business 1", desc: "Sole proprietorship #1" },
+        { label: "Schedule C – Business 2", desc: "Sole proprietorship #2" },
+        { label: "Schedule C – New Business", desc: "Create new Schedule C" },
+      ],
+      "1099-NEC": [
+        { label: "Other Income", desc: "Schedule 1, Line 8" },
+        { label: "Schedule C – Business 1", desc: "Self-employment income" },
+        { label: "Schedule C – Business 2", desc: "Self-employment income" },
+        { label: "Schedule C – New Business", desc: "Create new Schedule C" },
+      ],
+      "1099-INT": [
+        { label: "Interest Income", desc: "Schedule B, Part I" },
+        { label: "Tax-Exempt Interest", desc: "Form 1040, Line 2a" },
+        { label: "Seller-Financed Mortgage Interest", desc: "Schedule B, Line 1" },
+      ],
+      "1099-DIV": [
+        { label: "Ordinary Dividends", desc: "Schedule B, Part II" },
+        { label: "Qualified Dividends", desc: "Form 1040, Line 3a" },
+        { label: "Capital Gain Distributions", desc: "Schedule D, Line 13" },
+      ],
+      "1099-B": [
+        { label: "Short-Term Capital Gains", desc: "Schedule D, Part I" },
+        { label: "Long-Term Capital Gains", desc: "Schedule D, Part II" },
+        { label: "Form 8949 – Box A", desc: "Reported basis to IRS" },
+        { label: "Form 8949 – Box D", desc: "Long-term, basis reported" },
+      ],
+      "1098": [
+        { label: "Home Mortgage Interest", desc: "Schedule A, Line 8a" },
+        { label: "Investment Interest", desc: "Form 4952" },
+        { label: "Rental Mortgage Interest", desc: "Schedule E, Line 12" },
+      ],
+      "SSA 1099": [
+        { label: "Social Security Benefits", desc: "Form 1040, Line 6a" },
+        { label: "SS Benefits – Taxpayer", desc: "Form 1040, Line 6a" },
+        { label: "SS Benefits – Spouse", desc: "Form 1040, Line 6a (joint)" },
+      ],
+      "K-1 1120S": [
+        { label: "S-Corp K-1 #1", desc: "Schedule E, Part II" },
+        { label: "S-Corp K-1 #2", desc: "Schedule E, Part II" },
+        { label: "New S-Corp K-1", desc: "Create new K-1 entry" },
+      ],
+    };
+
+    const actionOptions = [
+      { label: "Map to existing form", desc: "Use selected mapping" },
+      { label: "Add new form", desc: "Create a new entry on the return" },
+      { label: "Skip document", desc: "Exclude from this export" },
+      { label: "Mark as reviewed", desc: "No mapping needed" },
+    ];
+
+    const videoSources = {
+      proconnect: {
+        title: "Export to ProConnect",
+        src: "https://www.loom.com/embed/e411e678032d4d3fa53f24e82e937a37?hide_owner=true&hide_share=true",
+      },
+      cch: {
+        title: "Export to CCH Axcess",
+        src: "https://www.loom.com/embed/20cd6712246d446eb8c6ca14943c05eb?hide_owner=true&hide_share=true",
+      },
+    };
+
+    function docIconSVG() {
+      return '<svg class="doc-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>';
+    }
+    function eyeSVG() {
+      return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+    }
+    function caretSVG() {
+      return '<svg class="caret" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+    }
+
+    function escapeHTML(str) {
+      if (str == null) return "";
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    }
+
+    function renderDropdown({ id, options, selected, placeholder }) {
+      const selectedOpt = options.find(o => o.label === selected);
+      const toggleLabel = selectedOpt ? selectedOpt.label : placeholder;
+      const placeholderClass = selectedOpt ? "" : "placeholder";
+      const items = options.map(opt => `
+        <div class="dropdown-item${opt.label === selected ? " selected" : ""}" data-value="${escapeHTML(opt.label)}">
+          <div class="dropdown-item-wrap">
+            <div>${escapeHTML(opt.label)}</div>
+            ${opt.desc ? `<span class="desc">${escapeHTML(opt.desc)}</span>` : ""}
+          </div>
+          ${opt.label === selected ? '<span class="check">✓</span>' : ""}
+        </div>`).join("");
+      return `
+        <div class="dropdown" data-dropdown-id="${id}">
+          <button type="button" class="dropdown-toggle ${placeholderClass}">
+            <span class="dropdown-label">${escapeHTML(toggleLabel)}</span>
+            ${caretSVG()}
+          </button>
+          <div class="dropdown-menu" role="listbox">${items}</div>
+        </div>`;
+    }
+
+    function renderRow(doc, index) {
+      const mapOptions = mapOptionsByForm[doc.form] || [];
+      const mapDropdown = renderDropdown({ id: `map-${index}`, options: mapOptions, selected: doc.mappedTo || null, placeholder: "Select mapping" });
+      const actionDropdown = renderDropdown({ id: `action-${index}`, options: actionOptions, selected: doc.defaultAction || null, placeholder: "Select" });
+      return `
+        <div class="table-row" data-row="${index}">
+          <div class="doc-name">
+            ${docIconSVG()}
+            <span class="doc-name-text" title="${escapeHTML(doc.name)}">${escapeHTML(doc.name)}</span>
+          </div>
+          <div class="form-cell">${escapeHTML(doc.form)}</div>
+          <div class="issuer-cell">${doc.issuer === "N/A" ? '<span class="dash">N/A</span>' : escapeHTML(doc.issuer)}</div>
+          <div class="dash">—</div>
+          <div class="dash">—</div>
+          <div>
+            <a href="#" class="preview-link" data-preview="${index}">
+              ${eyeSVG()}
+              <span>View</span>
+            </a>
+          </div>
+          <div>${mapDropdown}</div>
+          <div>${actionDropdown}</div>
+          <div class="row-status" title="Ready to export"></div>
+        </div>`;
+    }
+
+    function renderTable() {
+      document.getElementById("tableBody").innerHTML = documents.map(renderRow).join("");
+    }
+
+    function closeAllDropdowns(exceptEl) {
+      document.querySelectorAll(".dropdown.open").forEach(d => {
+        if (d !== exceptEl) d.classList.remove("open");
+      });
+    }
+
+    function bindDropdowns() {
+      document.addEventListener("click", e => {
+        const toggle = e.target.closest(".dropdown-toggle");
+        const item = e.target.closest(".dropdown-item");
+        const dropdown = e.target.closest(".dropdown");
+
+        if (toggle) {
+          const parent = toggle.parentElement;
+          const wasOpen = parent.classList.contains("open");
+          closeAllDropdowns(wasOpen ? null : parent);
+          parent.classList.toggle("open");
+          return;
+        }
+        if (item && dropdown) {
+          const value = item.dataset.value;
+          const label = dropdown.querySelector(".dropdown-label");
+          const toggleBtn = dropdown.querySelector(".dropdown-toggle");
+          label.textContent = value;
+          toggleBtn.classList.remove("placeholder");
+          dropdown.querySelectorAll(".dropdown-item").forEach(i => {
+            i.classList.toggle("selected", i === item);
+            const existingCheck = i.querySelector(".check");
+            if (existingCheck) existingCheck.remove();
+            if (i === item) {
+              const check = document.createElement("span");
+              check.className = "check";
+              check.textContent = "✓";
+              i.appendChild(check);
+            }
+          });
+          dropdown.classList.remove("open");
+          return;
+        }
+        if (!dropdown) closeAllDropdowns();
+      });
+      document.addEventListener("keydown", e => { if (e.key === "Escape") closeAllDropdowns(); });
+    }
+
+    function openModal(targetKey) {
+      const data = videoSources[targetKey];
+      if (!data) return;
+      const modal = document.getElementById("videoModal");
+      document.getElementById("modalTitle").textContent = data.title;
+      document.getElementById("videoFrame").src = data.src;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("videoModal");
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+      document.getElementById("videoFrame").src = "";
+      document.body.style.overflow = "";
+    }
+
+    function bindModal() {
+      document.querySelectorAll(".export-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.target;
+          if (target) openModal(target);
+        });
+      });
+      document.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", closeModal));
+      document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+    }
+
+    let toastTimer;
+    function flashToast(message) {
+      let toast = document.getElementById("__toast");
+      if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "__toast";
+        Object.assign(toast.style, {
+          position: "fixed", bottom: "24px", left: "50%", transform: "translateX(-50%)",
+          background: "#0E3D2E", color: "white", padding: "10px 18px", borderRadius: "999px",
+          fontSize: "13.5px", fontWeight: "500", boxShadow: "0 8px 24px rgba(15,30,22,0.25)",
+          zIndex: "2000", opacity: "0", transition: "opacity 0.2s", pointerEvents: "none",
+        });
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.style.opacity = "1";
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => (toast.style.opacity = "0"), 1800);
+    }
+
+    function bindPreviews() {
+      document.addEventListener("click", e => {
+        const link = e.target.closest(".preview-link");
+        if (!link) return;
+        e.preventDefault();
+        flashToast(`Preview: ${documents[link.dataset.preview].name}`);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderTable();
+      bindDropdowns();
+      bindModal();
+      bindPreviews();
+    });
+  </script>
+</body>
+</html>

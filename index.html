@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <title>Juno — Tax Preparations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --juno-dark: #0E3D2E;
+      --juno-dark-2: #0A3225;
+      --juno-mint: #D7F2DE;
+      --juno-mint-2: #E8F7EC;
+      --green-dot: #2BB35C;
+      --purple: #6B4FBB;
+      --bg: #FFFFFF;
+      --bg-soft: #F7F8F8;
+      --row-hover: #FAFBFA;
+      --text: #1A1F1B;
+      --text-muted: #6B7280;
+      --text-faint: #9CA3AF;
+      --border: #E5E7EB;
+      --border-soft: #EEF0F0;
+      --shadow-sm: 0 1px 2px rgba(15, 30, 22, 0.05);
+      --shadow-md: 0 8px 24px rgba(15, 30, 22, 0.08);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html { color-scheme: only light; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #FFFFFF;
+      color: #1A1F1B;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 48px;
+      border-bottom: 1px solid var(--border-soft);
+      background: #FFFFFF;
+    }
+    .logo-wrap {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 1px;
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.5px;
+      color: var(--juno-dark);
+    }
+    .logo-text { line-height: 1; }
+    .logo-o {
+      width: 22px;
+      height: 22px;
+      margin: 0 1px;
+      transform: translateY(2px);
+    }
+    .logo-dot {
+      color: var(--juno-dark);
+      font-weight: 700;
+      font-size: 26px;
+      margin-left: 1px;
+    }
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--juno-mint);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .user-avatar:hover { background: #C8EAD3; }
+
+    .main {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 36px 48px 80px;
+      background: #FFFFFF;
+    }
+
+    .help-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--juno-dark);
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .help-link:hover { text-decoration: underline; }
+
+    .list-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .list-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--juno-dark);
+      margin: 0;
+      letter-spacing: -0.3px;
+    }
+    .list-header-right {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .toggle-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .toggle-wrap input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .toggle-track {
+      width: 42px;
+      height: 24px;
+      background: #D1D5DB;
+      border-radius: 999px;
+      position: relative;
+      transition: background 0.2s;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+    .toggle-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    }
+    .toggle-wrap input:checked + .toggle-track { background: var(--juno-dark); }
+    .toggle-wrap input:checked + .toggle-track .toggle-thumb { transform: translateX(18px); }
+    .toggle-label {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .list-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: var(--shadow-sm);
+      overflow: visible;
+    }
+    .list-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .search-input {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex: 0 0 360px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 12px;
+      height: 42px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .search-input:focus-within {
+      border-color: var(--juno-dark);
+      box-shadow: 0 0 0 3px rgba(14, 61, 46, 0.08);
+    }
+    .search-input svg { margin-right: 8px; flex-shrink: 0; }
+    .search-input input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: transparent;
+    }
+    .filter-btn, .resync-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 18px;
+      height: 42px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .filter-btn:hover, .resync-btn:hover {
+      background: var(--bg-soft);
+      border-color: #C7CDD2;
+    }
+    .resync-btn {
+      margin-left: auto;
+      border-radius: 999px;
+    }
+
+    .list-table-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.4fr 1.4fr 110px;
+      gap: 12px;
+      padding: 14px 22px;
+      background: var(--bg-soft);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .list-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.4fr 1.4fr 110px;
+      gap: 12px;
+      padding: 18px 22px;
+      align-items: center;
+      border-bottom: 1px solid var(--border-soft);
+      text-decoration: none;
+      color: var(--text);
+      transition: background 0.12s;
+      font-size: 14px;
+    }
+    .list-row:hover { background: var(--row-hover); }
+    .list-row:last-child { border-bottom: none; }
+
+    .client-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .avatar-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      color: white;
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .avatar-circle.small {
+      width: 36px;
+      height: 36px;
+      font-size: 13px;
+    }
+    .purple-avatar { background: #6B4FBB; }
+    .blue-avatar { background: #4F76C7; }
+    .orange-avatar { background: #E08A3D; }
+    .pink-avatar { background: #D45EA3; }
+    .teal-avatar { background: #3C8C8C; }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+    .status-pill::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .status-pill.purple { background: #EFE9FB; color: #6B4FBB; }
+    .status-pill.green { background: #DCF3E4; color: #1E7B47; }
+    .status-pill.warning { background: #FEF1D6; color: #B45309; }
+    .status-pill.gray { background: #F1F2F4; color: #4B5563; }
+
+    .view-cell {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--juno-dark);
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .list-row:hover .view-cell { text-decoration: underline; }
+
+    @media (max-width: 880px) {
+      .topbar { padding: 16px 22px; }
+      .main { padding: 24px 22px 60px; }
+      .list-toolbar { flex-wrap: wrap; }
+      .search-input { flex: 1 1 100%; }
+      .resync-btn { margin-left: 0; }
+      .list-table-header { display: none; }
+      .list-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 14px 16px;
+      }
+      .list-header-right { gap: 16px; }
+    }
+  </style>
+</head>
+<body style="background-color: #ffffff; color: #1a1f1b; margin: 0;">
+  <header class="topbar">
+    <div class="logo-wrap">
+      <span class="logo-text">JUN</span>
+      <svg class="logo-o" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="13" fill="none" stroke="#0E3D2E" stroke-width="5.5"/>
+      </svg>
+      <span class="logo-dot">.</span>
+    </div>
+    <button class="user-avatar" aria-label="User profile">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0E3D2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+    </button>
+  </header>
+
+  <main class="main">
+    <div class="list-header">
+      <h1 class="list-title">Tax Preparations</h1>
+      <div class="list-header-right">
+        <a href="#" class="help-link">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <span>Help Center</span>
+        </a>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="showAllToggle" checked />
+          <span class="toggle-track">
+            <span class="toggle-thumb"></span>
+          </span>
+          <span class="toggle-label">Show all preparations</span>
+        </label>
+      </div>
+    </div>
+
+    <section class="list-card">
+      <div class="list-toolbar">
+        <div class="search-input">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" value="all" placeholder="Search..." />
+        </div>
+        <button class="filter-btn" type="button">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="21" y1="6" x2="11" y2="6"></line>
+            <line x1="14" y1="12" x2="3" y2="12"></line>
+            <line x1="17" y1="18" x2="7" y2="18"></line>
+          </svg>
+          <span>Filter</span>
+        </button>
+        <button class="resync-btn" type="button">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+          <span>Resync Clients</span>
+        </button>
+      </div>
+
+      <div class="list-table-header">
+        <div>Client</div>
+        <div>Tax Year</div>
+        <div>Preparer</div>
+        <div>Tax Prep Status</div>
+        <div></div>
+      </div>
+
+      <div class="list-table-body">
+        <a href="preparation.html" class="list-row">
+          <div class="client-cell">
+            <div class="avatar-circle small purple-avatar">DD</div>
+            <span>Daisy Duck</span>
+          </div>
+          <div>2024</div>
+          <div>Jack Flitcroft</div>
+          <div><span class="status-pill warning">Mapping In Progress</span></div>
+          <div class="view-cell">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>View</span>
+          </div>
+        </a>
+
+        <a href="preparation.html" class="list-row">
+          <div class="client-cell">
+            <div class="avatar-circle small blue-avatar">AS</div>
+            <span>All SourceDocs</span>
+          </div>
+          <div>2024</div>
+          <div>Jack Flitcroft</div>
+          <div><span class="status-pill purple">Export Complete</span></div>
+          <div class="view-cell">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>View</span>
+          </div>
+        </a>
+
+        <a href="preparation.html" class="list-row">
+          <div class="client-cell">
+            <div class="avatar-circle small orange-avatar">DK</div>
+            <span>Donald Duck</span>
+          </div>
+          <div>2024</div>
+          <div>Jack Flitcroft</div>
+          <div><span class="status-pill gray">Awaiting Documents</span></div>
+          <div class="view-cell">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>View</span>
+          </div>
+        </a>
+
+        <a href="preparation.html" class="list-row">
+          <div class="client-cell">
+            <div class="avatar-circle small pink-avatar">MM</div>
+            <span>Minnie Mouse</span>
+          </div>
+          <div>2024</div>
+          <div>Jack Flitcroft</div>
+          <div><span class="status-pill green">Ready to Export</span></div>
+          <div class="view-cell">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>View</span>
+          </div>
+        </a>
+
+        <a href="preparation.html" class="list-row">
+          <div class="client-cell">
+            <div class="avatar-circle small teal-avatar">SM</div>
+            <span>Scrooge McDuck</span>
+          </div>
+          <div>2023</div>
+          <div>Jack Flitcroft</div>
+          <div><span class="status-pill purple">Export Complete</span></div>
+          <div class="view-cell">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span>View</span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
